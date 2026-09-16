@@ -1,0 +1,10 @@
+Agentic worker started...
+02:35:15 Worker 93d78486afe046e99179ca9018107de0: started with PID 44825, version 2.11.0
+02:35:15 Worker 93d78486afe046e99179ca9018107de0: subscribing to channel rq:pubsub:93d78486afe046e99179ca9018107de0
+02:35:15 *** Listening on agentic...
+02:35:15 Worker 93d78486afe046e99179ca9018107de0: cleaning registries for queue: agentic
+02:39:27 Worker 93d78486afe046e99179ca9018107de0: agentic: agents.supervisor.supervisor_agent('diode') (c2184a68-d0c4-4527-9712-dee2eb2ecee6)
+objc[45791]: +[NSNumber initialize] may have been in progress in another thread when fork() was called.
+objc[45791]: +[NSNumber initialize] may have been in progress in another thread when fork() was called. We cannot safely call it or ignore it in the fork() child process. Crashing instead. Set a breakpoint on objc_initializeAfterForkError to debug.
+02:39:33 Worker 93d78486afe046e99179ca9018107de0: job c2184a68-d0c4-4527-9712-dee2eb2ecee6 failed (Work-horse terminated unexpectedly; waitpid returned 6 (signal 6); )
+02:39:33 Work horse killed for job c2184a68-d0c4-4527-9712-dee2eb2ecee6: retpid=45791, ret_val=6

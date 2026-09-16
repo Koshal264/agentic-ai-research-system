@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sovereign AI Workbench</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Sovereign AI Workbench</h1>
+            <p>Confidential Multi-Agent AI Assistant</p>
+        </header>
+
+        <main>
+
+            <div id="chat-box" class="chat-box">
+
+                <div class="message bot">
+                    Hello! Ask me something about your documents.
+                </div>
+
+            </div>
+
+            <div class="input-area">
+
+                <textarea
+                    id="query"
+                    placeholder="Ask your question..."
+                ></textarea>
+
+                <button onclick="sendQuery()">
+                    Send
+                </button>
+
+            </div>
+
+            <div id="status"></div>
+
+        </main>
+
+    </div>
+
+   <script src="./app.js"></script>
+</body>
+
+</html>
+<!-- python -m http.server 5500 -->
