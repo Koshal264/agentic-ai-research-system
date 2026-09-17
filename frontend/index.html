@@ -1,13 +1,24 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Sovereign AI Workbench</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 <body>
@@ -15,19 +26,33 @@
     <div class="container">
 
         <header>
-            <h1>Sovereign AI Workbench</h1>
-            <p>Confidential Multi-Agent AI Assistant</p>
+
+            <h1>
+                Sovereign AI Workbench
+            </h1>
+
+            <p>
+                Confidential Multi-Agent AI Assistant
+            </p>
+
         </header>
 
         <main>
 
-            <div id="chat-box" class="chat-box">
+            <div
+                id="chat-box"
+                class="chat-box"
+            >
 
                 <div class="message bot">
-                    Hello! Ask me something about your documents.
+
+                    Hello! Ask me something about your
+                    documents or upload an image/PDF for analysis.
+
                 </div>
 
             </div>
+
 
             <div class="input-area">
 
@@ -36,20 +61,70 @@
                     placeholder="Ask your question..."
                 ></textarea>
 
-                <button onclick="sendQuery()">
+
+                <!-- IMAGE UPLOAD -->
+
+                <label>
+                    Image:
+                </label>
+
+                <input
+                    type="file"
+                    id="image"
+                    accept="image/*"
+                >
+
+
+                <button
+                    onclick="analyzeImage()"
+                >
+                    Analyze Image
+                </button>
+
+
+                <!-- PDF UPLOAD -->
+
+                <label>
+                    PDF:
+                </label>
+
+                <input
+                    type="file"
+                    id="pdf"
+                    accept=".pdf,application/pdf"
+                >
+
+
+                <button
+                    onclick="uploadPDF()"
+                >
+                    Upload PDF
+                </button>
+
+
+                <!-- NORMAL CHAT -->
+
+                <button
+                    onclick="sendQuery()"
+                >
                     Send
                 </button>
 
             </div>
 
-            <div id="status"></div>
+
+            <div
+                id="status"
+            ></div>
 
         </main>
 
     </div>
 
-   <script src="./app.js"></script>
+
+    <script src="./app.js"></script>
+
 </body>
 
 </html>
-<!-- python -m http.server 5500 -->
+
