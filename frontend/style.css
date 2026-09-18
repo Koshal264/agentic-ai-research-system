@@ -1,20 +1,20 @@
 :root {
-  --bg: #120f1d;
-  --sidebar: #0e0c17;
-  --panel: #181425;
-  --panel-raised: #211c34;
-  --border: #332c4c;
-  --border-soft: #241f36;
-  --text: #ece9f7;
-  --text-dim: #9791b2;
-  --text-faint: #635c7e;
-  --accent: #8b7cf6;
-  --accent-soft: rgba(139, 124, 246, 0.14);
-  --accent-line: rgba(139, 124, 246, 0.5);
-  --user-bubble: #5b4fd1;
-  --bot-bubble: #211c34;
-  --success: #57c97a;
-  --error: #e2694f;
+  --bg: #f7f8fa;
+  --sidebar: #f1f3f5;
+  --panel: #ffffff;
+  --panel-raised: #f8fafc;
+  --border: #e2e6eb;
+  --border-soft: #edf0f3;
+  --text: #1f2937;
+  --text-dim: #667085;
+  --text-faint: #98a2b3;
+  --accent: #5b6ee1;
+  --accent-soft: rgba(91, 110, 225, 0.10);
+  --accent-line: rgba(91, 110, 225, 0.38);
+  --user-bubble: #5b6ee1;
+  --bot-bubble: #f1f4f8;
+  --success: #3f8f63;
+  --error: #c65d4b;
   --radius: 10px;
   --radius-sm: 7px;
 }
@@ -39,7 +39,7 @@ body {
   gap: 14px;
   padding: 14px 22px;
   border-bottom: 1px solid var(--border-soft);
-  background: linear-gradient(180deg, #161223, #120f1d);
+  background: linear-gradient(180deg, #ffffff, #f7f8fa);
 }
 
 .sidebar-toggle {
@@ -100,8 +100,8 @@ body {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.72rem;
   color: var(--success);
-  background: rgba(87, 201, 122, 0.1);
-  border: 1px solid rgba(87, 201, 122, 0.28);
+  background: rgba(63, 143, 99, 0.08);
+  border: 1px solid rgba(63, 143, 99, 0.24);
   padding: 5px 10px;
   border-radius: 999px;
   white-space: nowrap;
@@ -110,15 +110,15 @@ body {
 }
 
 .status-pill.busy {
-  color: #e0b24c;
-  background: rgba(224, 178, 76, 0.1);
-  border-color: rgba(224, 178, 76, 0.3);
+  color: #946d25;
+  background: rgba(180, 132, 49, 0.08);
+  border-color: rgba(180, 132, 49, 0.25);
 }
 
 .status-pill.error {
   color: var(--error);
-  background: rgba(226, 105, 79, 0.1);
-  border-color: rgba(226, 105, 79, 0.3);
+  background: rgba(198, 93, 75, 0.08);
+  border-color: rgba(198, 93, 75, 0.25);
 }
 
 /* Shell: sidebar + main */
@@ -198,7 +198,7 @@ body {
 }
 
 .history-item:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(15, 23, 42, 0.035);
   color: var(--text);
 }
 
@@ -285,7 +285,7 @@ body {
 
 .message.user .msg-avatar {
   background: var(--user-bubble);
-  color: #eaf0ff;
+  color: #ffffff;
 }
 
 .msg-body {
@@ -338,7 +338,7 @@ body {
 
 .message.user .msg-bubble {
   background: var(--user-bubble);
-  color: #f1f4ff;
+  color: #ffffff;
   border-bottom-right-radius: 3px;
 }
 
@@ -470,7 +470,7 @@ body {
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #4c7cdc;
+  background: #4f61cf;
 }
 
 .btn:disabled {
@@ -515,7 +515,7 @@ body {
     z-index: 10;
     transform: translateX(-100%);
     transition: transform 0.2s ease;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 0 24px rgba(15, 23, 42, 0.10);
   }
 
   .history-panel.is-open {
@@ -545,4 +545,61 @@ body {
     flex-direction: column;
     align-items: stretch;
   }
+}
+/* Modern AI workspace theme + subtle robot background */
+body { position: relative; overflow-x: hidden; }
+body::before {
+  content: "";
+  position: fixed;
+  width: 520px;
+  height: 520px;
+  right: -170px;
+  top: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91,110,225,.08), transparent 68%);
+  pointer-events: none;
+  z-index: -1;
+}
+.robot-background {
+  position: fixed;
+  right: 3vw;
+  bottom: 2vh;
+  width: min(430px, 34vw);
+  opacity: .065;
+  color: #5b6ee1;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+.robot-background svg { display:block; width:100%; height:auto; }
+.robot-glow { fill: rgba(91,110,225,.12); }
+.robot-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.app-header, .history-panel, .chat-box, .input-area {
+  box-shadow: 0 10px 30px rgba(15,23,42,.06);
+}
+.chat-box, .input-area {
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(8px);
+}
+.history-panel {
+  background: rgba(241,243,245,.94);
+  backdrop-filter: blur(8px);
+}
+.btn-primary { box-shadow: 0 5px 14px rgba(91,110,225,.18); }
+.btn-primary:hover:not(:disabled) {
+  background: #4f61cf;
+  box-shadow: 0 7px 18px rgba(91,110,225,.24);
+}
+.query-input::placeholder { color:#a1a8b3; }
+@media (max-width:860px) {
+  .robot-background { width:320px; right:-80px; bottom:20px; }
+}
+@media (max-width:480px) {
+  .robot-background { width:260px; right:-90px; bottom:60px; }
 }
