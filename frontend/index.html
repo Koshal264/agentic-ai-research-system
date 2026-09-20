@@ -1,109 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sovereign AI Workbench</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sovereign AI Workbench</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <header class="app-header">
-    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle history" aria-expanded="true">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-    </button>
+    <div class="container">
 
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 9 4.6-.3 8-4 8-9V5l-8-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12.2l2.1 2.1L15.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-      <div class="brand-text">
-        <h1>Sovereign AI Workbench</h1>
-        <p>Confidential multi-agent assistant, local to your documents</p>
-      </div>
+        <header>
+            <h1>Sovereign AI Workbench</h1>
+            <p>Confidential Multi-Agent AI Assistant</p>
+        </header>
+
+        <main>
+
+            <div id="chat-box" class="chat-box">
+
+                <div class="message bot">
+                    Hello! Ask me something about your
+                    documents or upload an image/PDF for analysis.
+                </div>
+
+            </div>
+
+
+            <div class="input-area">
+
+                <textarea
+                    id="query"
+                    placeholder="Ask your question..."
+                ></textarea>
+
+                <div class="toolbar">
+
+                    <div class="upload-group">
+                        <label for="image">Image:</label>
+                        <input type="file" id="image" accept="image/*">
+                        <button onclick="analyzeImage()">Analyze Image</button>
+                    </div>
+
+                    <div class="upload-group">
+                        <label for="pdf">PDF:</label>
+                        <input type="file" id="pdf" accept=".pdf,application/pdf">
+                        <button onclick="uploadPDF()">Upload PDF</button>
+                    </div>
+
+                    <button class="send-btn" onclick="sendQuery()">Send</button>
+
+                </div>
+
+            </div>
+
+            <div id="status"></div>
+
+        </main>
+
     </div>
 
-    <span class="status-pill" id="connection-status">Ready</span>
-  </header>
-
-  <div class="shell">
-
-    <aside class="history-panel" id="history-panel">
-      <button class="new-session-btn" id="new-session-btn">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        New session
-      </button>
-
-      <p class="history-heading">Recent</p>
-      <div class="history-list" id="history-list">
-        <!-- populated by app.js -->
-      </div>
-    </aside>
-
-    <main class="workbench">
-
-      <section id="chat-box" class="chat-box" aria-live="polite">
-        <!-- populated by app.js -->
-      </section>
-
-      <section class="input-area">
-
-        <label class="field-label" for="query">Message</label>
-        <textarea
-          id="query"
-          class="query-input"
-          placeholder="Ask your question... (Enter to send, Shift+Enter for a new line)"
-          rows="2"
-        ></textarea>
-
-        <div class="toolbar">
-
-          <div class="upload-group">
-            <label class="field-label" for="image">Image</label>
-            <input type="file" id="image" accept="image/*">
-            <button class="btn btn-secondary" id="analyze-btn" onclick="analyzeImage()">Analyze image</button>
-          </div>
-
-          <div class="upload-group">
-            <label class="field-label" for="pdf">PDF</label>
-            <input type="file" id="pdf" accept=".pdf,application/pdf">
-            <button class="btn btn-secondary" id="upload-btn" onclick="uploadPDF()">Upload PDF</button>
-          </div>
-
-          <button class="btn btn-primary" id="send-btn" onclick="sendQuery()">Send</button>
-
-        </div>
-
-      </section>
-
-      <p id="status" class="status-line"></p>
-
-    </main>
-
-  </div>
-
-  <!-- Decorative watermark referenced by style.css (.robot-background / .robot-glow / .robot-line) -->
-  <div class="robot-background" aria-hidden="true">
-    <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
-      <circle class="robot-glow" cx="200" cy="220" r="190"/>
-      <rect class="robot-line" x="120" y="55" width="160" height="130" rx="18"/>
-      <line class="robot-line" x1="200" y1="55" x2="200" y2="26"/>
-      <circle class="robot-line" cx="200" cy="18" r="8"/>
-      <circle class="robot-line" cx="160" cy="118" r="10"/>
-      <circle class="robot-line" cx="240" cy="118" r="10"/>
-      <path class="robot-line" d="M168 158 q32 22 64 0"/>
-      <rect class="robot-line" x="100" y="205" width="200" height="180" rx="16"/>
-      <line class="robot-line" x1="150" y1="245" x2="250" y2="245"/>
-      <line class="robot-line" x1="150" y1="285" x2="250" y2="285"/>
-      <line class="robot-line" x1="150" y1="325" x2="220" y2="325"/>
-      <line class="robot-line" x1="100" y1="235" x2="58" y2="278"/>
-      <line class="robot-line" x1="300" y1="235" x2="342" y2="278"/>
-    </svg>
-  </div>
-
-  <script src="./app.js"></script>
+   <script src="./app.js"></script>
 </body>
+
 </html>
+<!-- python -m http.server 5500 -->
