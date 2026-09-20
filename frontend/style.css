@@ -546,6 +546,7 @@ body {
     align-items: stretch;
   }
 }
+
 /* Modern AI workspace theme + subtle robot background */
 body { position: relative; overflow-x: hidden; }
 body::before {
