@@ -1,4 +1,3 @@
-
 from rag.retriever import retrieve_documents
 from utils.llm import ask_llm
 
@@ -83,4 +82,3 @@ User Request:
     report = ask_llm(prompt)
 
     return report
-

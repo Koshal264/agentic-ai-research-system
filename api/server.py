@@ -301,4 +301,3 @@ def get_job_status(
         "status": job.get_status(),
         "result": job.result
     }
-

@@ -68,4 +68,3 @@ def retrieve_documents(
     )
 
     return results
-
