@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Sovereign AI Workbench</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,15 +11,13 @@
 
 <div class="page">
 
-    <!-- ============================= -->
-    <!-- LOGIN / SIGNUP -->
-    <!-- ============================= -->
+    <!-- ================= AUTH ================= -->
 
     <section id="auth-screen" class="auth-screen">
 
         <div class="auth-card">
 
-            <div class="logo auth-logo">✦</div>
+            <div class="auth-logo">✦</div>
 
             <h1>Sovereign AI</h1>
 
@@ -40,18 +35,17 @@
                     type="text"
                     id="login-username"
                     placeholder="Username"
+                    autocomplete="username"
                 >
 
                 <input
                     type="password"
                     id="login-password"
                     placeholder="Password"
+                    autocomplete="current-password"
                 >
 
-                <button
-                    class="auth-btn"
-                    onclick="login()"
-                >
+                <button class="auth-btn" onclick="login()">
                     Login
                 </button>
 
@@ -59,9 +53,7 @@
 
                 <p class="switch-auth">
                     Don't have an account?
-                    <button onclick="showSignup()">
-                        Sign up
-                    </button>
+                    <button onclick="showSignup()">Sign up</button>
                 </p>
 
             </div>
@@ -69,10 +61,7 @@
 
             <!-- SIGNUP -->
 
-            <div
-                id="signup-form"
-                style="display: none;"
-            >
+            <div id="signup-form" style="display: none;">
 
                 <h2>Create Account</h2>
 
@@ -80,18 +69,17 @@
                     type="text"
                     id="signup-username"
                     placeholder="Username"
+                    autocomplete="username"
                 >
 
                 <input
                     type="password"
                     id="signup-password"
                     placeholder="Password"
+                    autocomplete="new-password"
                 >
 
-                <button
-                    class="auth-btn"
-                    onclick="signup()"
-                >
+                <button class="auth-btn" onclick="signup()">
                     Create Account
                 </button>
 
@@ -99,9 +87,7 @@
 
                 <p class="switch-auth">
                     Already have an account?
-                    <button onclick="showLogin()">
-                        Login
-                    </button>
+                    <button onclick="showLogin()">Login</button>
                 </p>
 
             </div>
@@ -111,14 +97,9 @@
     </section>
 
 
-    <!-- ============================= -->
-    <!-- MAIN APPLICATION -->
-    <!-- ============================= -->
+    <!-- ================= MAIN APP ================= -->
 
-    <div
-        id="app-screen"
-        style="display: none;"
-    >
+    <div id="app-screen" style="display: none;">
 
         <!-- HEADER -->
 
@@ -126,20 +107,13 @@
 
             <div class="brand">
 
-                <div class="logo">
+                <div class="brand-logo">
                     ✦
                 </div>
 
                 <div>
-
-                    <h1>
-                        Sovereign AI Workbench
-                    </h1>
-
-                    <p>
-                        Intelligent • Secure • Multimodal
-                    </p>
-
+                    <h1>Sovereign AI Workbench</h1>
+                    <p>Intelligent • Secure • Multimodal</p>
                 </div>
 
             </div>
@@ -148,11 +122,8 @@
             <div class="header-right">
 
                 <div class="connection">
-
                     <span></span>
-
                     All systems operational
-
                 </div>
 
                 <div class="user-info">
@@ -175,16 +146,11 @@
         </header>
 
 
-        <!-- ============================= -->
-        <!-- MAIN DASHBOARD -->
-        <!-- ============================= -->
+        <!-- ================= DASHBOARD ================= -->
 
         <div class="dashboard">
 
-
-            <!-- ============================= -->
-            <!-- CHAT HISTORY -->
-            <!-- ============================= -->
+            <!-- LEFT: HISTORY -->
 
             <aside class="history-panel">
 
@@ -192,14 +158,10 @@
 
                     <div>
                         <h2>Chat History</h2>
-
-                        <p>
-                            Your conversations
-                        </p>
+                        <p>Your conversations</p>
                     </div>
 
                 </div>
-
 
                 <button
                     class="new-chat-btn"
@@ -208,24 +170,19 @@
                     + New Chat
                 </button>
 
-
                 <div
                     id="chat-history-list"
                     class="chat-history-list"
                 >
-
                     <div class="history-empty">
                         No previous chats
                     </div>
-
                 </div>
 
             </aside>
 
 
-            <!-- ============================= -->
-            <!-- CHAT -->
-            <!-- ============================= -->
+            <!-- CENTER: CHAT -->
 
             <section class="chat-panel">
 
@@ -236,21 +193,12 @@
                     </div>
 
                     <div>
-
-                        <h2>
-                            AI Assistant
-                        </h2>
-
-                        <p>
-                            Chat with your intelligent agents
-                        </p>
-
+                        <h2>AI Assistant</h2>
+                        <p>Chat with your intelligent agents</p>
                     </div>
 
                 </div>
 
-
-                <!-- CURRENT CHAT -->
 
                 <div
                     id="chat-box"
@@ -263,32 +211,25 @@
                             ✦
                         </div>
 
+                        <div class="welcome-badge">
+                            SOVEREIGN AI
+                        </div>
+
                         <h3>
                             How can I help you?
                         </h3>
 
                         <p>
-                            Ask a question, upload a document,
-                            analyze an image, or use Voice AI.
+                            Ask questions, analyze documents,
+                            understand images, or interact using Voice AI.
                         </p>
 
                         <div class="chips">
 
-                            <div>
-                                📄 Documents
-                            </div>
-
-                            <div>
-                                🖼️ Vision
-                            </div>
-
-                            <div>
-                                🎤 Voice AI
-                            </div>
-
-                            <div>
-                                🤖 AI Chat
-                            </div>
+                            <div>📄 Documents</div>
+                            <div>🖼️ Vision</div>
+                            <div>🎤 Voice AI</div>
+                            <div>🤖 AI Chat</div>
 
                         </div>
 
@@ -319,21 +260,19 @@
             </section>
 
 
-            <!-- ============================= -->
-            <!-- TOOLS -->
-            <!-- ============================= -->
+            <!-- RIGHT: TOOLS -->
 
             <aside class="tools-panel">
 
                 <div class="tools-heading">
 
-                    <h2>
-                        AI Tools
-                    </h2>
-
-                    <p>
-                        Upload files or use multimodal AI
-                    </p>
+                    <div class="tools-title">
+                        <span>✦</span>
+                        <div>
+                            <h2>AI Tools</h2>
+                            <p>Multimodal capabilities</p>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -349,19 +288,11 @@
                         </div>
 
                         <div>
-
-                            <h3>
-                                Voice AI
-                            </h3>
-
-                            <p>
-                                Speak with your AI assistant
-                            </p>
-
+                            <h3>Voice AI</h3>
+                            <p>Speak with your AI assistant</p>
                         </div>
 
                     </div>
-
 
                     <button
                         id="voice-btn"
@@ -371,7 +302,6 @@
                         🎤 Start Recording
                         <span>→</span>
                     </button>
-
 
                     <div
                         id="voice-status"
@@ -394,19 +324,11 @@
                         </div>
 
                         <div>
-
-                            <h3>
-                                Vision AI
-                            </h3>
-
-                            <p>
-                                Understand images
-                            </p>
-
+                            <h3>Vision AI</h3>
+                            <p>Understand images</p>
                         </div>
 
                     </div>
-
 
                     <input
                         type="file"
@@ -414,7 +336,6 @@
                         accept="image/*"
                         hidden
                     >
-
 
                     <label
                         for="image"
@@ -426,19 +347,11 @@
                         </div>
 
                         <div>
-
-                            <b>
-                                Choose image
-                            </b>
-
-                            <small>
-                                PNG, JPG or JPEG
-                            </small>
-
+                            <b>Choose image</b>
+                            <small>PNG, JPG or JPEG</small>
                         </div>
 
                     </label>
-
 
                     <input
                         type="text"
@@ -446,7 +359,6 @@
                         class="small-input"
                         placeholder="Ask about this image..."
                     >
-
 
                     <button
                         class="action-btn"
@@ -470,19 +382,11 @@
                         </div>
 
                         <div>
-
-                            <h3>
-                                RAG Documents
-                            </h3>
-
-                            <p>
-                                Chat with your PDF
-                            </p>
-
+                            <h3>RAG Documents</h3>
+                            <p>Chat with your PDF</p>
                         </div>
 
                     </div>
-
 
                     <input
                         type="file"
@@ -490,7 +394,6 @@
                         accept=".pdf"
                         hidden
                     >
-
 
                     <label
                         for="pdf"
@@ -502,19 +405,11 @@
                         </div>
 
                         <div>
-
-                            <b>
-                                Choose PDF
-                            </b>
-
-                            <small>
-                                PDF documents only
-                            </small>
-
+                            <b>Choose PDF</b>
+                            <small>PDF documents only</small>
                         </div>
 
                     </label>
-
 
                     <div
                         id="pdf-name"
@@ -522,7 +417,6 @@
                     >
                         No PDF selected
                     </div>
-
 
                     <button
                         class="action-btn"
@@ -546,18 +440,11 @@
 
         </div>
 
-
-        <footer>
-            Sovereign AI • RAG • Vision AI • Voice AI
-        </footer>
-
     </div>
 
 </div>
 
-
 <script src="app.js"></script>
 
 </body>
-
 </html>

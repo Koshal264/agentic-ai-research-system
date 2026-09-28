@@ -8,9 +8,9 @@ html,
 body {
     width: 100%;
     height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f7f7f8;
-    color: #222;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background: #f6f7fb;
+    color: #202124;
 }
 
 body {
@@ -20,9 +20,157 @@ body {
 .page {
     width: 100%;
     height: 100vh;
+}
+
+
+/* =====================================================
+   AUTH SCREEN
+===================================================== */
+
+.auth-screen {
+    width: 100%;
+    height: 100vh;
 
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(91,92,226,.10), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(91,92,226,.08), transparent 30%),
+        #f7f8fc;
+}
+
+.auth-card {
+    width: 390px;
+    padding: 42px 40px;
+
+    background: rgba(255,255,255,.96);
+
+    border: 1px solid #e6e7ef;
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 70px rgba(25,30,60,.10);
+
+    text-align: center;
+}
+
+.auth-logo {
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #eeeeff;
+    color: #5b5ce2;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.auth-card h1 {
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+}
+
+.auth-subtitle {
+    margin-top: 7px;
+    margin-bottom: 30px;
+
+    font-size: 12px;
+    color: #8a8d99;
+}
+
+.auth-card h2 {
+    margin-bottom: 17px;
+
+    font-size: 17px;
+    font-weight: 600;
+    color: #30323a;
+}
+
+.auth-card input {
+    width: 100%;
+    height: 45px;
+
+    margin-bottom: 12px;
+    padding: 0 14px;
+
+    border: 1px solid #dedfe7;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #fafbfe;
+    color: #25262c;
+
+    font-size: 13px;
+
+    transition: .2s;
+}
+
+.auth-card input:focus {
+    border-color: #6b6ce8;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(91,92,226,.08);
+}
+
+.auth-btn {
+    width: 100%;
+    height: 45px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #5b5ce2;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.auth-btn:hover {
+    background: #4d4ecb;
+    transform: translateY(-1px);
+}
+
+.auth-status {
+    min-height: 18px;
+    margin-top: 10px;
+
+    font-size: 11px;
+    color: #c43f4c;
+}
+
+.switch-auth {
+    margin-top: 20px;
+
+    font-size: 11px;
+    color: #888b95;
+}
+
+.switch-auth button {
+    border: none;
+    background: transparent;
+
+    color: #5b5ce2;
+
+    font-weight: 600;
+    cursor: pointer;
 }
 
 
@@ -31,80 +179,66 @@ body {
 ===================================================== */
 
 .header {
-    height: 62px;
-
-    flex-shrink: 0;
+    height: 68px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 24px;
+    padding: 0 26px;
 
-    background: white;
+    background: rgba(255,255,255,.96);
 
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e5e6eb;
 }
 
 .brand {
     display: flex;
     align-items: center;
-
-    gap: 10px;
+    gap: 11px;
 }
 
 .brand-logo {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 9px;
+    border-radius: 11px;
 
     background: #eeeeff;
-
     color: #5b5ce2;
 
-    font-size: 17px;
-
-    box-shadow:
-        0 4px 12px rgba(91, 92, 226, 0.18);
+    font-size: 18px;
 }
 
 .brand h1 {
     font-size: 15px;
-
-    font-weight: 650;
-
-    color: #202123;
+    font-weight: 700;
 }
 
 .brand p {
-    margin-top: 2px;
+    margin-top: 3px;
 
     font-size: 9px;
-
-    color: #929292;
+    color: #999ca6;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-
-    gap: 16px;
+    gap: 20px;
 }
 
 .connection {
     display: flex;
     align-items: center;
-
-    gap: 6px;
+    gap: 7px;
 
     font-size: 10px;
-
-    color: #777;
+    color: #777b85;
 }
 
 .connection span {
@@ -114,31 +248,29 @@ body {
     border-radius: 50%;
 
     background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.12);
 }
 
 .user-info {
     display: flex;
     align-items: center;
-
-    gap: 9px;
+    gap: 10px;
 }
 
 #logged-user {
     font-size: 10px;
-
-    color: #555;
+    font-weight: 600;
+    color: #555861;
 }
 
 .logout-btn {
-    padding: 7px 11px;
+    padding: 7px 12px;
 
-    border: 1px solid #ddd;
-
-    border-radius: 7px;
+    border: 1px solid #dedfe5;
+    border-radius: 8px;
 
     background: white;
-
-    color: #555;
+    color: #555861;
 
     font-size: 9px;
 
@@ -146,32 +278,30 @@ body {
 }
 
 .logout-btn:hover {
-    background: #f3f3f3;
+    background: #f4f4f6;
 }
 
 
 /* =====================================================
-   MAIN 3 COLUMN DASHBOARD
+   DASHBOARD
 ===================================================== */
 
 .dashboard {
-    flex: 1;
-
-    min-height: 0;
+    height: calc(100vh - 68px);
 
     display: grid;
 
     grid-template-columns:
         235px
         minmax(500px, 1fr)
-        285px;
+        290px;
 
     background: white;
 }
 
 
 /* =====================================================
-   LEFT — CHAT HISTORY
+   HISTORY
 ===================================================== */
 
 .history-panel {
@@ -181,11 +311,11 @@ body {
     display: flex;
     flex-direction: column;
 
-    padding: 17px 12px;
+    padding: 19px 13px;
 
-    background: #f7f7f8;
+    background: #f8f8fa;
 
-    border-right: 1px solid #e2e2e2;
+    border-right: 1px solid #e4e4e8;
 }
 
 .history-header {
@@ -194,46 +324,36 @@ body {
 
 .history-header h2 {
     font-size: 12px;
-
-    font-weight: 600;
-
-    color: #444;
+    font-weight: 650;
 }
 
 .history-header p {
     margin-top: 4px;
 
     font-size: 9px;
-
-    color: #999;
+    color: #999ca6;
 }
 
 .new-chat-btn {
     width: 100%;
-
-    height: 37px;
+    height: 38px;
 
     margin-bottom: 12px;
 
-    border: 1px solid #ddd;
-
-    border-radius: 8px;
+    border: 1px solid #dedfe4;
+    border-radius: 9px;
 
     background: white;
-
-    color: #333;
+    color: #45474f;
 
     font-size: 10px;
-
     font-weight: 600;
 
     cursor: pointer;
-
-    transition: 0.15s;
 }
 
 .new-chat-btn:hover {
-    background: #eeeeee;
+    background: #f0f0f3;
 }
 
 .chat-history-list {
@@ -246,7 +366,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    gap: 2px;
+    gap: 3px;
 }
 
 .history-empty {
@@ -255,96 +375,17 @@ body {
     text-align: center;
 
     font-size: 9px;
-
-    color: #999;
-}
-
-.history-item {
-    position: relative;
-
-    padding: 10px 30px 10px 11px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    transition: 0.15s;
-}
-
-.history-item:hover {
-    background: #eaeaec;
-}
-
-.history-item.active {
-    background: #e2e2e4;
-}
-
-.history-title {
-    font-size: 10px;
-
-    font-weight: 500;
-
-    color: #3e3e3e;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-.history-date {
-    margin-top: 4px;
-
-    font-size: 7px;
-
-    color: #999;
-}
-
-.delete-chat-btn {
-    position: absolute;
-
-    right: 6px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 22px;
-    height: 22px;
-
-    border: none;
-
-    border-radius: 6px;
-
-    background: transparent;
-
-    color: #999;
-
-    cursor: pointer;
-
-    opacity: 0;
-}
-
-.history-item:hover .delete-chat-btn {
-    opacity: 1;
-}
-
-.delete-chat-btn:hover {
-    background: #dcdcdc;
-
-    color: #444;
+    color: #999ca6;
 }
 
 
 /* =====================================================
-   CENTER — CHAT
+   CHAT
 ===================================================== */
 
 .chat-panel {
     min-width: 0;
     min-height: 0;
-
-    height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -353,51 +394,44 @@ body {
 }
 
 .panel-header {
-    height: 56px;
+    height: 60px;
 
     flex-shrink: 0;
 
-    padding: 0 24px;
+    padding: 0 25px;
 
     display: flex;
     align-items: center;
+    gap: 11px;
 
-    gap: 10px;
-
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeef;
 }
 
 .panel-icon {
-    width: 31px;
-    height: 31px;
+    width: 32px;
+    height: 32px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     background: #eeeeff;
-
-    color: #5b5ce2;
 
     font-size: 14px;
 }
 
 .panel-header h2 {
     font-size: 13px;
-
-    font-weight: 600;
-
-    color: #333;
+    font-weight: 650;
 }
 
 .panel-header p {
-    margin-top: 2px;
+    margin-top: 3px;
 
     font-size: 8px;
-
-    color: #999;
+    color: #999ca6;
 }
 
 
@@ -416,7 +450,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
 
-    padding: 25px 35px 20px;
+    padding: 28px 36px 20px;
 
     scroll-behavior: smooth;
 }
@@ -430,9 +464,7 @@ body {
     height: 100%;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
@@ -442,68 +474,71 @@ body {
 }
 
 .welcome-logo {
-    width: 58px;
-    height: 58px;
+    width: 65px;
+    height: 65px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 17px;
+    margin-bottom: 14px;
 
-    border-radius: 16px;
+    border-radius: 19px;
 
     background: #eeeeff;
-
     color: #5b5ce2;
 
-    font-size: 25px;
+    font-size: 27px;
+}
+
+.welcome-badge {
+    margin-bottom: 10px;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #7778d9;
 }
 
 .welcome h3 {
     margin-bottom: 8px;
 
-    font-size: 21px;
-
-    font-weight: 600;
-
-    color: #222;
+    font-size: 22px;
+    font-weight: 650;
 }
 
 .welcome p {
-    max-width: 450px;
+    max-width: 470px;
 
     font-size: 11px;
+    line-height: 1.7;
 
-    line-height: 1.6;
-
-    color: #888;
+    color: #888b94;
 }
 
 .chips {
     display: flex;
-
-    gap: 8px;
-
-    margin-top: 20px;
-
     flex-wrap: wrap;
 
     justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 21px;
 }
 
 .chips div {
     padding: 8px 12px;
 
-    border: 1px solid #e1e1e1;
-
+    border: 1px solid #e2e3e8;
     border-radius: 20px;
 
-    background: white;
-
-    color: #666;
+    background: #fff;
 
     font-size: 8px;
+    color: #666972;
 }
 
 
@@ -532,31 +567,27 @@ body {
 
     padding: 11px 14px;
 
-    border-radius: 12px;
+    border-radius: 13px;
 
     font-size: 12px;
-
     line-height: 1.6;
 
     white-space: pre-wrap;
-
     overflow-wrap: anywhere;
 }
 
 .message.user .message-content {
     background: #eeeeee;
-
     color: #222;
 
     border-radius: 14px;
 }
 
 .message.bot .message-content {
-    background: transparent;
-
-    color: #303030;
-
     padding-left: 0;
+
+    background: transparent;
+    color: #303030;
 }
 
 
@@ -567,26 +598,23 @@ body {
 .input-container {
     width: min(820px, calc(100% - 60px));
 
-    min-height: 54px;
+    min-height: 55px;
 
     margin: 0 auto 18px;
 
     display: flex;
-
     align-items: flex-end;
-
     gap: 8px;
 
     padding: 7px 7px 7px 14px;
 
-    border: 1px solid #dcdcdc;
-
+    border: 1px solid #dcdde3;
     border-radius: 17px;
 
     background: white;
 
     box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.045);
+        0 5px 20px rgba(30,30,50,.05);
 }
 
 textarea {
@@ -595,7 +623,6 @@ textarea {
     min-width: 0;
 
     height: 38px;
-
     max-height: 130px;
 
     resize: none;
@@ -603,22 +630,18 @@ textarea {
     padding: 10px 3px;
 
     border: none;
-
     outline: none;
 
     background: transparent;
 
     font-family: inherit;
-
     font-size: 12px;
-
-    line-height: 1.5;
 
     color: #222;
 }
 
 textarea::placeholder {
-    color: #999;
+    color: #999ca5;
 }
 
 #send-btn {
@@ -628,24 +651,24 @@ textarea::placeholder {
     flex-shrink: 0;
 
     border: none;
-
     border-radius: 10px;
 
     background: #5b5ce2;
-
     color: white;
 
     font-size: 10px;
-
     font-weight: 600;
 
     cursor: pointer;
-
-    transition: 0.15s;
 }
 
 #send-btn:hover {
     background: #4d4ecb;
+}
+
+#send-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
 }
 
 #send-btn span {
@@ -654,48 +677,62 @@ textarea::placeholder {
 
 
 /* =====================================================
-   RIGHT — TOOLS
+   TOOLS
 ===================================================== */
 
 .tools-panel {
     min-width: 0;
     min-height: 0;
 
-    padding: 17px 14px;
+    padding: 18px 14px;
 
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
 
     overflow-y: auto;
 
     background: #fafafa;
 
-    border-left: 1px solid #e2e2e2;
+    border-left: 1px solid #e4e4e8;
 }
 
 .tools-heading {
-    flex-shrink: 0;
-
     padding: 3px 7px 9px;
+}
+
+.tools-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.tools-title > span {
+    width: 29px;
+    height: 29px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eeeeff;
+    color: #5b5ce2;
+
+    font-size: 13px;
 }
 
 .tools-heading h2 {
     font-size: 13px;
-
-    font-weight: 600;
-
-    color: #444;
+    font-weight: 650;
 }
 
 .tools-heading p {
     margin-top: 3px;
 
-    font-size: 9px;
-
-    color: #999;
+    font-size: 8px;
+    color: #999ca6;
 }
 
 
@@ -704,27 +741,25 @@ textarea::placeholder {
 ===================================================== */
 
 .tool {
-    padding: 12px;
+    padding: 13px;
 
-    border: 1px solid #e2e2e2;
-
-    border-radius: 11px;
+    border: 1px solid #e1e2e7;
+    border-radius: 12px;
 
     background: white;
 
-    transition: 0.15s;
+    transition: .2s;
 }
 
 .tool:hover {
-    border-color: #d2d2d2;
+    border-color: #d3d4db;
 
     box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.035);
+        0 5px 16px rgba(30,30,50,.045);
 }
 
 .tool-heading {
     display: flex;
-
     align-items: center;
 
     gap: 9px;
@@ -733,15 +768,14 @@ textarea::placeholder {
 }
 
 .tool-logo {
-    width: 32px;
-    height: 32px;
+    width: 33px;
+    height: 33px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     background: #eeeeff;
 
@@ -749,27 +783,25 @@ textarea::placeholder {
 }
 
 .tool-logo.vision {
-    background: #eeeeff;
+    background: #eef5ff;
 }
 
 .tool-logo.document {
-    background: #fff0f1;
+    background: #fff1f2;
 }
 
 .tool-heading h3 {
     font-size: 10px;
+    font-weight: 650;
 
-    color: #333;
-
-    font-weight: 600;
+    color: #33353d;
 }
 
 .tool-heading p {
-    margin-top: 2px;
+    margin-top: 3px;
 
     font-size: 8px;
-
-    color: #999;
+    color: #999ca6;
 }
 
 
@@ -778,44 +810,41 @@ textarea::placeholder {
 ===================================================== */
 
 .dropzone {
-    height: 48px;
+    height: 49px;
 
     display: flex;
-
     align-items: center;
 
     gap: 9px;
 
     padding: 8px 10px;
 
-    border: 1px dashed #cfd3dd;
-
+    border: 1px dashed #cfd2dc;
     border-radius: 8px;
 
     background: white;
 
     cursor: pointer;
+
+    transition: .2s;
 }
 
 .dropzone:hover {
     border-color: #7778e9;
-
     background: #fafaff;
 }
 
 .upload-icon {
-    width: 27px;
-    height: 27px;
+    width: 28px;
+    height: 28px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border-radius: 7px;
 
     background: #f0f0ff;
-
     color: #5b5ce2;
 
     font-size: 16px;
@@ -825,7 +854,6 @@ textarea::placeholder {
     display: block;
 
     font-size: 9px;
-
     color: #606676;
 }
 
@@ -835,18 +863,16 @@ textarea::placeholder {
     margin-top: 2px;
 
     font-size: 7px;
-
     color: #9b9fac;
 }
 
 
 /* =====================================================
-   SMALL INPUT
+   INPUTS
 ===================================================== */
 
 .small-input {
     width: 100%;
-
     height: 32px;
 
     margin-top: 7px;
@@ -854,17 +880,14 @@ textarea::placeholder {
     padding: 8px 9px;
 
     border: 1px solid #dfe2e9;
-
     border-radius: 8px;
 
     outline: none;
 
     font-family: inherit;
-
     font-size: 9px;
 
     color: #34394a;
-
     background: white;
 }
 
@@ -881,19 +904,15 @@ textarea::placeholder {
     height: 25px;
 
     display: flex;
-
     align-items: center;
 
     padding: 0 2px;
 
     font-size: 8px;
-
     color: #999eac;
 
     white-space: nowrap;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
 }
 
@@ -904,24 +923,22 @@ textarea::placeholder {
 
 .action-btn {
     width: 100%;
-
-    height: 32px;
+    height: 33px;
 
     margin-top: 7px;
 
     border: none;
-
     border-radius: 8px;
 
     background: #f0f0ff;
-
     color: #5658d5;
 
     font-size: 9px;
-
-    font-weight: 600;
+    font-weight: 650;
 
     cursor: pointer;
+
+    transition: .15s;
 }
 
 .action-btn:hover {
@@ -930,7 +947,6 @@ textarea::placeholder {
 
 .action-btn span {
     margin-left: 5px;
-
     font-size: 12px;
 }
 
@@ -942,7 +958,7 @@ textarea::placeholder {
 .status {
     display: none;
 
-    padding: 8px;
+    padding: 9px;
 
     border-radius: 8px;
 
@@ -957,29 +973,17 @@ textarea::placeholder {
 
 .status.loading {
     background: #edf5ff;
-
     color: #3266b2;
 }
 
 .status.success {
     background: #ecfaf2;
-
     color: #178651;
 }
 
 .status.error {
     background: #fff0f1;
-
     color: #c43f4c;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer {
-    display: none;
 }
 
 
@@ -997,7 +1001,6 @@ footer {
 
 ::-webkit-scrollbar-thumb {
     background: #d5d5d5;
-
     border-radius: 10px;
 }
 
@@ -1021,7 +1024,6 @@ footer {
     }
 }
 
-
 @media (max-width: 900px) {
 
     .dashboard {
@@ -1034,7 +1036,6 @@ footer {
         display: none;
     }
 }
-
 
 @media (max-width: 750px) {
 
@@ -1050,7 +1051,6 @@ footer {
     .dashboard {
         display: flex;
         flex-direction: column;
-
         height: auto;
     }
 
@@ -1077,7 +1077,6 @@ footer {
     }
 }
 
-
 @media (max-width: 550px) {
 
     .history-panel {
@@ -1094,5 +1093,10 @@ footer {
 
     .message-content {
         max-width: 90%;
+    }
+
+    .auth-card {
+        width: calc(100% - 30px);
+        padding: 35px 25px;
     }
 }
