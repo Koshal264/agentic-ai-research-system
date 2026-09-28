@@ -1,33 +1,61 @@
+import os
+import uuid
+import subprocess
+import tempfile
 
-from pathlib import Path
+import whisper
 
-from fastapi import FastAPI, Query, UploadFile, File, Form
+from fastapi import (
+    FastAPI,
+    Depends,
+    UploadFile,
+    File,
+    HTTPException
+)
 from fastapi.middleware.cors import CORSMiddleware
 
-from rq import Queue
 from redis import Redis
+from rq import Queue
+from rq.job import Job
+
+from auth.database import init_db
+from auth.routes import router as auth_router
+from auth.dependencies import get_current_user
+from history.routes import router as history_router
 
 from agents.supervisor import supervisor_agent
-from agents.vision_agent import vision_agent
+
 from rag.pdf_ingest import ingest_pdf
 
 
+# =========================================================
+# WHISPER MODEL
+# =========================================================
+
+whisper_model = whisper.load_model("base")
+
+
+# =========================================================
+# FASTAPI APP
+# =========================================================
+
 app = FastAPI(
-    title="Sovereign Agentic AI Workbench",
-    description="Multi-agent AI system for confidential document work",
+    title="Sovereign AI Workbench",
+    description="Privacy-focused Agentic AI Workbench",
     version="1.0.0"
 )
 
 
-# ========================================
+# =========================================================
 # CORS
-# ========================================
+# =========================================================
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://127.0.0.1:5500",
-        "http://localhost:5500"
+        "http://localhost:5500",
+        "https://separately-process-mandate-portrait.trycloudflare.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -35,269 +63,356 @@ app.add_middleware(
 )
 
 
-# ========================================
+# =========================================================
+# DATABASE
+# =========================================================
+
+init_db()
+
+app.include_router(auth_router)
+app.include_router(history_router)
+
+
+# =========================================================
 # REDIS + RQ
-# ========================================
+# =========================================================
 
-redis_connection = Redis(
+redis_conn = Redis(
     host="localhost",
-    port=6379
+    port=6379,
+    decode_responses=False
 )
 
-queue = Queue(
+task_queue = Queue(
     "agentic",
-    connection=redis_connection
+    connection=redis_conn
 )
 
 
-# ========================================
+# =========================================================
 # CURRENT PDF
-# ========================================
-# This stores the PDF uploaded most recently.
-#
-# Example:
-#
-# current_pdf = "412KB.pdf"
-#
-# Questions asked afterwards will use this PDF.
-# ========================================
+# =========================================================
 
 current_pdf = None
 
 
-# ========================================
+# =========================================================
 # ROOT
-# ========================================
+# =========================================================
 
 @app.get("/")
 def root():
-
     return {
-        "status": "server is running",
-        "service": "Sovereign Agentic AI Workbench",
-        "current_pdf": current_pdf
+        "message": "Sovereign AI Workbench API is running",
+        "status": "online"
     }
 
 
-# ========================================
-# NORMAL CHAT
-# ========================================
+# =========================================================
+# CHAT
+# =========================================================
 
 @app.post("/chat")
 def chat(
-    query: str = Query(
-        ...,
-        description="User query"
-    )
+    query: str,
+    current_user: dict = Depends(get_current_user)
 ):
 
-    print("========================================")
-    print("TEXT CHAT REQUEST")
-    print("Query:", query)
-    print("Current PDF:", current_pdf)
-    print("========================================")
+    if not query.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Query cannot be empty"
+        )
 
-
-    job = queue.enqueue(
+    job = task_queue.enqueue(
         supervisor_agent,
         query,
         None,
         current_pdf
     )
 
+    return {
+        "status": "queued",
+        "job_id": job.id,
+        "source": current_pdf,
+        "user": current_user["username"]
+    }
+
+
+# =========================================================
+# VISION CHAT
+# =========================================================
+
+@app.post("/vision-chat")
+async def vision_chat(
+    query: str,
+    image: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+
+    if not image.filename:
+        raise HTTPException(
+            status_code=400,
+            detail="Image file is required"
+        )
+
+    extension = os.path.splitext(
+        image.filename
+    )[1]
+
+    filename = f"{uuid.uuid4()}{extension}"
+
+    temp_dir = tempfile.gettempdir()
+
+    image_path = os.path.join(
+        temp_dir,
+        filename
+    )
+
+    contents = await image.read()
+
+    with open(image_path, "wb") as f:
+        f.write(contents)
+
+    job = task_queue.enqueue(
+        supervisor_agent,
+        query,
+        image_path,
+        None
+    )
 
     return {
         "status": "queued",
         "job_id": job.id,
-        "source": current_pdf
+        "user": current_user["username"]
     }
 
 
-# ========================================
-# VISION CHAT
-# ========================================
+# =========================================================
+# VOICE CHAT - FULLY LOCAL WHISPER
+# =========================================================
 
-@app.post("/vision-chat")
-async def vision_chat(
-    query: str = Form(...),
-    image: UploadFile = File(...)
+@app.post("/voice-chat")
+async def voice_chat(
+    audio: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
 ):
 
-    images_dir = Path("data/images")
+    if not audio.filename:
+        raise HTTPException(
+            status_code=400,
+            detail="Audio file is required"
+        )
 
-    images_dir.mkdir(
-        parents=True,
-        exist_ok=True
+    temp_dir = tempfile.gettempdir()
+
+    input_path = os.path.join(
+        temp_dir,
+        f"{uuid.uuid4()}_{audio.filename}"
     )
 
-
-    if not image.filename:
-
-        return {
-            "status": "error",
-            "message": "No image selected."
-        }
-
-
-    image_path = images_dir / image.filename
-
-    image_bytes = await image.read()
-
-
-    with open(
-        image_path,
-        "wb"
-    ) as buffer:
-
-        buffer.write(image_bytes)
-
-
-    print("========================================")
-    print("VISION REQUEST RECEIVED")
-    print("Query:", query)
-    print("Image:", image_path)
-    print("Image exists:", image_path.exists())
-    print("Image size:", image_path.stat().st_size)
-    print("========================================")
-
-
-    job = queue.enqueue(
-        vision_agent,
-        str(image_path),
-        query
+    wav_path = os.path.join(
+        temp_dir,
+        f"{uuid.uuid4()}.wav"
     )
 
+    # -----------------------------------------------------
+    # Save uploaded audio
+    # -----------------------------------------------------
+
+    audio_data = await audio.read()
+
+    with open(input_path, "wb") as f:
+        f.write(audio_data)
+
+    # -----------------------------------------------------
+    # Convert browser audio to WAV
+    # -----------------------------------------------------
+
+    try:
+
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-y",
+                "-i",
+                input_path,
+                "-ar",
+                "16000",
+                "-ac",
+                "1",
+                wav_path
+            ],
+            check=True,
+            capture_output=True
+        )
+
+    except subprocess.CalledProcessError:
+
+        if os.path.exists(input_path):
+            os.remove(input_path)
+
+        raise HTTPException(
+            status_code=500,
+            detail="Audio conversion failed"
+        )
+
+    # -----------------------------------------------------
+    # LOCAL WHISPER TRANSCRIPTION
+    # -----------------------------------------------------
+
+    try:
+
+        result = whisper_model.transcribe(
+            wav_path,
+            fp16=False
+        )
+
+        query = result["text"].strip()
+
+        if not query:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Could not understand the audio"
+            )
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Local speech recognition failed: {str(e)}"
+        )
+
+    finally:
+
+        if os.path.exists(input_path):
+            os.remove(input_path)
+
+        if os.path.exists(wav_path):
+            os.remove(wav_path)
+
+    # -----------------------------------------------------
+    # SEND TRANSCRIBED QUERY TO LOCAL WORKER
+    # -----------------------------------------------------
+
+    job = task_queue.enqueue(
+        supervisor_agent,
+        query,
+        None,
+        None,
+        True
+    )
 
     return {
         "status": "queued",
-        "job_id": job.id
+        "job_id": job.id,
+        "transcript": query,
+        "user": current_user["username"]
     }
 
 
-# ========================================
+# =========================================================
 # PDF UPLOAD
-# ========================================
+# =========================================================
 
 @app.post("/upload-pdf")
 async def upload_pdf(
-    pdf: UploadFile = File(...)
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
 ):
 
     global current_pdf
 
+    if not file.filename:
+        raise HTTPException(
+            status_code=400,
+            detail="PDF file is required"
+        )
 
-    documents_dir = Path("data/documents")
+    if not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=400,
+            detail="Only PDF files are allowed"
+        )
 
-    documents_dir.mkdir(
-        parents=True,
-        exist_ok=True
+    temp_dir = tempfile.gettempdir()
+
+    pdf_path = os.path.join(
+        temp_dir,
+        f"{uuid.uuid4()}.pdf"
     )
 
+    contents = await file.read()
 
-    if not pdf.filename:
-
-        return {
-            "status": "error",
-            "message": "No PDF selected."
-        }
-
-
-    if not pdf.filename.lower().endswith(".pdf"):
-
-        return {
-            "status": "error",
-            "message": "Only PDF files are allowed."
-        }
-
-
-    pdf_path = documents_dir / pdf.filename
-
-
-    pdf_bytes = await pdf.read()
-
-
-    with open(
-        pdf_path,
-        "wb"
-    ) as buffer:
-
-        buffer.write(pdf_bytes)
-
-
-    print("========================================")
-    print("PDF UPLOAD RECEIVED")
-    print("PDF:", pdf_path)
-    print("PDF exists:", pdf_path.exists())
-    print("PDF size:", pdf_path.stat().st_size)
-    print("========================================")
-
+    with open(pdf_path, "wb") as f:
+        f.write(contents)
 
     try:
 
-        result = ingest_pdf(
-            str(pdf_path)
+        ingest_pdf(pdf_path)
+
+        current_pdf = pdf_path
+
+    except Exception as e:
+
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"PDF ingestion failed: {str(e)}"
         )
 
-
-        # --------------------------------
-        # Remember uploaded PDF
-        # --------------------------------
-
-        current_pdf = pdf.filename
-
-
-        print("========================================")
-        print("CURRENT PDF UPDATED")
-        print("Current PDF:", current_pdf)
-        print("========================================")
+    return {
+        "message": "PDF uploaded successfully",
+        "filename": file.filename,
+        "source": current_pdf,
+        "user": current_user["username"]
+    }
 
 
-        return {
-            "status": "success",
-            "message": "PDF uploaded and indexed successfully.",
-            "current_pdf": current_pdf,
-            "result": result
-        }
-
-
-    except Exception as error:
-
-        print("PDF INGESTION ERROR:", error)
-
-
-        return {
-            "status": "error",
-            "message": "PDF upload succeeded but ingestion failed.",
-            "error": str(error)
-        }
-
-
-# ========================================
+# =========================================================
 # JOB STATUS
-# ========================================
+# =========================================================
 
 @app.get("/job-status")
-def get_job_status(
-    job_id: str = Query(
-        ...,
-        description="Job ID"
-    )
+def job_status(
+    job_id: str,
+    current_user: dict = Depends(get_current_user)
 ):
 
-    job = queue.fetch_job(
-        job_id
-    )
+    try:
 
+        job = Job.fetch(
+            job_id,
+            connection=redis_conn
+        )
 
-    if job is None:
+    except Exception:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Job not found"
+        )
+
+    if job.is_finished:
 
         return {
-            "status": "not_found",
-            "result": None
+            "status": "finished",
+            "result": job.result
         }
 
+    if job.is_failed:
+
+        return {
+            "status": "failed",
+            "result": "Task failed"
+        }
 
     return {
-        "status": job.get_status(),
-        "result": job.result
+        "status": "processing"
     }

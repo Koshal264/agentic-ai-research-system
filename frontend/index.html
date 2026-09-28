@@ -7,69 +7,557 @@
 
     <title>Sovereign AI Workbench</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+<div class="page">
 
-        <header>
-            <h1>Sovereign AI Workbench</h1>
-            <p>Confidential Multi-Agent AI Assistant</p>
+    <!-- ============================= -->
+    <!-- LOGIN / SIGNUP -->
+    <!-- ============================= -->
+
+    <section id="auth-screen" class="auth-screen">
+
+        <div class="auth-card">
+
+            <div class="logo auth-logo">✦</div>
+
+            <h1>Sovereign AI</h1>
+
+            <p class="auth-subtitle">
+                Secure Agentic AI Workbench
+            </p>
+
+            <!-- LOGIN -->
+
+            <div id="login-form">
+
+                <h2>Welcome Back</h2>
+
+                <input
+                    type="text"
+                    id="login-username"
+                    placeholder="Username"
+                >
+
+                <input
+                    type="password"
+                    id="login-password"
+                    placeholder="Password"
+                >
+
+                <button
+                    class="auth-btn"
+                    onclick="login()"
+                >
+                    Login
+                </button>
+
+                <p id="login-status" class="auth-status"></p>
+
+                <p class="switch-auth">
+                    Don't have an account?
+                    <button onclick="showSignup()">
+                        Sign up
+                    </button>
+                </p>
+
+            </div>
+
+
+            <!-- SIGNUP -->
+
+            <div
+                id="signup-form"
+                style="display: none;"
+            >
+
+                <h2>Create Account</h2>
+
+                <input
+                    type="text"
+                    id="signup-username"
+                    placeholder="Username"
+                >
+
+                <input
+                    type="password"
+                    id="signup-password"
+                    placeholder="Password"
+                >
+
+                <button
+                    class="auth-btn"
+                    onclick="signup()"
+                >
+                    Create Account
+                </button>
+
+                <p id="signup-status" class="auth-status"></p>
+
+                <p class="switch-auth">
+                    Already have an account?
+                    <button onclick="showLogin()">
+                        Login
+                    </button>
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- MAIN APPLICATION -->
+    <!-- ============================= -->
+
+    <div
+        id="app-screen"
+        style="display: none;"
+    >
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="brand">
+
+                <div class="logo">
+                    ✦
+                </div>
+
+                <div>
+
+                    <h1>
+                        Sovereign AI Workbench
+                    </h1>
+
+                    <p>
+                        Intelligent • Secure • Multimodal
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="connection">
+
+                    <span></span>
+
+                    All systems operational
+
+                </div>
+
+                <div class="user-info">
+
+                    <span id="logged-user">
+                        User
+                    </span>
+
+                    <button
+                        class="logout-btn"
+                        onclick="logout()"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
         </header>
 
-        <main>
 
-            <div id="chat-box" class="chat-box">
+        <!-- ============================= -->
+        <!-- MAIN DASHBOARD -->
+        <!-- ============================= -->
 
-                <div class="message bot">
-                    Hello! Ask me something about your
-                    documents or upload an image/PDF for analysis.
-                </div>
-
-            </div>
+        <div class="dashboard">
 
 
-            <div class="input-area">
+            <!-- ============================= -->
+            <!-- CHAT HISTORY -->
+            <!-- ============================= -->
 
-                <textarea
-                    id="query"
-                    placeholder="Ask your question..."
-                ></textarea>
+            <aside class="history-panel">
 
-                <div class="toolbar">
+                <div class="history-header">
 
-                    <div class="upload-group">
-                        <label for="image">Image:</label>
-                        <input type="file" id="image" accept="image/*">
-                        <button onclick="analyzeImage()">Analyze Image</button>
+                    <div>
+                        <h2>Chat History</h2>
+
+                        <p>
+                            Your conversations
+                        </p>
                     </div>
-
-                    <div class="upload-group">
-                        <label for="pdf">PDF:</label>
-                        <input type="file" id="pdf" accept=".pdf,application/pdf">
-                        <button onclick="uploadPDF()">Upload PDF</button>
-                    </div>
-
-                    <button class="send-btn" onclick="sendQuery()">Send</button>
 
                 </div>
 
-            </div>
 
-            <div id="status"></div>
+                <button
+                    class="new-chat-btn"
+                    onclick="createNewChat()"
+                >
+                    + New Chat
+                </button>
 
-        </main>
+
+                <div
+                    id="chat-history-list"
+                    class="chat-history-list"
+                >
+
+                    <div class="history-empty">
+                        No previous chats
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- ============================= -->
+            <!-- CHAT -->
+            <!-- ============================= -->
+
+            <section class="chat-panel">
+
+                <div class="panel-header">
+
+                    <div class="panel-icon">
+                        💬
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            AI Assistant
+                        </h2>
+
+                        <p>
+                            Chat with your intelligent agents
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CURRENT CHAT -->
+
+                <div
+                    id="chat-box"
+                    class="chat-box"
+                >
+
+                    <div class="welcome">
+
+                        <div class="welcome-logo">
+                            ✦
+                        </div>
+
+                        <h3>
+                            How can I help you?
+                        </h3>
+
+                        <p>
+                            Ask a question, upload a document,
+                            analyze an image, or use Voice AI.
+                        </p>
+
+                        <div class="chips">
+
+                            <div>
+                                📄 Documents
+                            </div>
+
+                            <div>
+                                🖼️ Vision
+                            </div>
+
+                            <div>
+                                🎤 Voice AI
+                            </div>
+
+                            <div>
+                                🤖 AI Chat
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHAT INPUT -->
+
+                <div class="input-container">
+
+                    <textarea
+                        id="query"
+                        placeholder="Ask anything..."
+                    ></textarea>
+
+                    <button
+                        id="send-btn"
+                        onclick="sendQuery()"
+                    >
+                        Send
+                        <span>➤</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ============================= -->
+            <!-- TOOLS -->
+            <!-- ============================= -->
+
+            <aside class="tools-panel">
+
+                <div class="tools-heading">
+
+                    <h2>
+                        AI Tools
+                    </h2>
+
+                    <p>
+                        Upload files or use multimodal AI
+                    </p>
+
+                </div>
+
+
+                <!-- VOICE -->
+
+                <div class="tool">
+
+                    <div class="tool-heading">
+
+                        <div class="tool-logo">
+                            🎤
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Voice AI
+                            </h3>
+
+                            <p>
+                                Speak with your AI assistant
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="voice-btn"
+                        class="action-btn"
+                        onclick="toggleVoice()"
+                    >
+                        🎤 Start Recording
+                        <span>→</span>
+                    </button>
+
+
+                    <div
+                        id="voice-status"
+                        class="file-name"
+                    >
+                        Click the button and speak
+                    </div>
+
+                </div>
+
+
+                <!-- VISION -->
+
+                <div class="tool">
+
+                    <div class="tool-heading">
+
+                        <div class="tool-logo vision">
+                            🖼️
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Vision AI
+                            </h3>
+
+                            <p>
+                                Understand images
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/*"
+                        hidden
+                    >
+
+
+                    <label
+                        for="image"
+                        class="dropzone"
+                    >
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <div>
+
+                            <b>
+                                Choose image
+                            </b>
+
+                            <small>
+                                PNG, JPG or JPEG
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="image-query"
+                        class="small-input"
+                        placeholder="Ask about this image..."
+                    >
+
+
+                    <button
+                        class="action-btn"
+                        onclick="analyzeImage()"
+                    >
+                        Analyze Image
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+                <!-- PDF -->
+
+                <div class="tool">
+
+                    <div class="tool-heading">
+
+                        <div class="tool-logo document">
+                            📄
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                RAG Documents
+                            </h3>
+
+                            <p>
+                                Chat with your PDF
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <input
+                        type="file"
+                        id="pdf"
+                        accept=".pdf"
+                        hidden
+                    >
+
+
+                    <label
+                        for="pdf"
+                        class="dropzone"
+                    >
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <div>
+
+                            <b>
+                                Choose PDF
+                            </b>
+
+                            <small>
+                                PDF documents only
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <div
+                        id="pdf-name"
+                        class="file-name"
+                    >
+                        No PDF selected
+                    </div>
+
+
+                    <button
+                        class="action-btn"
+                        onclick="uploadPDF()"
+                    >
+                        Upload & Index
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div
+                    id="status"
+                    class="status"
+                ></div>
+
+            </aside>
+
+        </div>
+
+
+        <footer>
+            Sovereign AI • RAG • Vision AI • Voice AI
+        </footer>
 
     </div>
 
-   <script src="./app.js"></script>
+</div>
+
+
+<script src="app.js"></script>
+
 </body>
 
 </html>
-<!-- python -m http.server 5500 -->
